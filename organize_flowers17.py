@@ -1,20 +1,26 @@
-# organize imports
+"""
+This script organize the flowers17 dataset into a training folder. The input
+of the script is the path containing all the images from the dataset and the output
+is the training folder.
+"""
+
 import os
 import glob
 import datetime
+import sys
 
 # print start time
-print ("[INFO] program started on - " + str(datetime.datetime.now))
+print("[INFO] program started on - " + str(datetime.datetime.now))
 
 # get the input and output path
-input_path  = "G:\\workspace\\machine-intelligence\\deep-learning\\flower-recognition\\17flowers\\jpg"
-output_path = "G:\\workspace\\machine-intelligence\\deep-learning\\flower-recognition\\dataset\\train"
+input_path = sys.argv[1]
+output_path = sys.argv[2]
 
 # get the class label limit
 class_limit = 17
 
 # take all the images from the dataset
-image_paths = glob.glob(input_path + "\\*.jpg")
+image_paths = glob.glob(input_path + os.sep + "*.jpg")
 
 # variables to keep track
 label = 0
@@ -23,28 +29,28 @@ j = 80
 
 # flower17 class names
 class_names = ["daffodil", "snowdrop", "lilyvalley", "bluebell", "crocus",
-			   "iris", "tigerlily", "tulip", "fritillary", "sunflower", 
-			   "daisy", "coltsfoot", "dandelion", "cowslip", "buttercup",
-			   "windflower", "pansy"]
+               "iris", "tigerlily", "tulip", "fritillary", "sunflower",
+               "daisy", "coltsfoot", "dandelion", "cowslip", "buttercup",
+               "windflower", "pansy"]
 
 # change the current working directory
 os.chdir(output_path)
 
 # loop over the class labels
-for x in range(1, class_limit+1):
-	# create a folder for that class
-	os.system("mkdir " + class_names[label])
-	# get the current path
-	cur_path = output_path + "\\" + class_names[label] + "\\"
-	# loop over the images in the dataset
-	for image_path in image_paths[i:j]:
-		original_path = image_path
-		image_path = image_path.split("\\")
-		image_path = image_path[len(image_path)-1]
-		os.system("copy " + original_path + " " + cur_path + image_path)
-	i += 80
-	j += 80
-	label += 1
+for x in range(1, class_limit + 1):
+    # create a folder for that class
+    os.system("mkdir -p " + class_names[label])
+    # get the current path
+    cur_path = output_path + os.sep + class_names[label] + os.sep
+    # loop over the images in the dataset
+    for image_path in image_paths[i:j]:
+        original_path = image_path
+        image_path = image_path.split(os.sep)
+        image_path = image_path[len(image_path) - 1]
+        os.system("cp " + original_path + " " + cur_path + image_path)
+    i += 80
+    j += 80
+    label += 1
 
 # print end time
-print ("[INFO] program ended on - " + str(datetime.datetime.now))
+print("[INFO] program ended on - " + str(datetime.datetime.now))
